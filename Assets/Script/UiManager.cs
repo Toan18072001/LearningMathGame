@@ -17,12 +17,12 @@ public class UiManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentUI= objectsUI[0];
-        currentUI.SetActive(true);
-        for(int i=1;i<objectsUI.Count;i++)
-        {
-            objectsUI[i].SetActive(false);
-        }
+        //currentUI= objectsUI[0];
+        //currentUI.SetActive(true);
+        //for(int i=1;i<objectsUI.Count;i++)
+        //{
+        //    objectsUI[i].SetActive(false);
+        //}
     }
     public void ShowUI(int index)
     {
