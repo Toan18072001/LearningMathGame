@@ -1,13 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UiManager : MonoBehaviour
 {
     public static UiManager instance { get; set; }
-    [SerializeField] List<GameObject> objectsUI;
+    [Header("Class Object")]
+    [SerializeField] LearningClassOne classOne;
 
+    [Header("PopupObject")]
+    [SerializeField] PopupQuitGame popupQuitGame;
 
+    [SerializeField] GameObject parent;
     [SerializeField] private GameObject currentUI;
     [SerializeField] private GameObject beforUI;
     private void Awake()
@@ -24,11 +29,42 @@ public class UiManager : MonoBehaviour
         //    objectsUI[i].SetActive(false);
         //}
     }
-    public void ShowUI(int index)
+    #region code logic no ref UI
+    public void BackUI()
     {
-        currentUI.SetActive(false);
-        objectsUI[index].SetActive(true);
-        currentUI = objectsUI[index];
+        //GameObject tmp = currentUI;
+        //beforUI.SetActive(true);
+        //currentUI.SetActive(false);
+        //currentUI = beforUI;
+        //beforUI = tmp;
+        Destroy(parent.transform.GetChild(1));
+
     }
 
+    public void ShowMenuGame()
+    {
+        SceneManager.LoadScene("MenuGameScene");
+    }
+    #endregion
+
+    #region Ref UI
+    
+    public void BackMenuGameUI()
+    {
+        Debug.Log("ckick");
+        popupQuitGame.gameObject.SetActive(true);
+    }
+   
+    public void GameOneSumOneNumber()
+    {
+        //classOne.PlusOneDigit("1 + 1 chữ số");
+        //currentUI.SetActive(false);
+        //beforUI = currentUI;
+        //currentUI = classOne.gameObject;
+        //classOne.gameObject.SetActive(true);
+        GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
+        ob.SetActive(true);
+        ob.GetComponent<LearningClassOne>().PlusOneDigit("1 + 1 chữ số");
+    }
+    #endregion
 }

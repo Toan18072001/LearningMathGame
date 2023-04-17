@@ -40,7 +40,7 @@ public class RegisterController : PlayFabManager
     {
         if (status == "RegisterSuccess")
         {
-            UiManager.instance.ShowUI(1);
+            //UiManager.instance.ShowUI(1);
         }
         else
         {

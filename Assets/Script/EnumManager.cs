@@ -7,3 +7,4 @@ public enum TypeCalculation
     Division = 3,// thương
     ComparisonSpells = 4,// so sánh
 }
+

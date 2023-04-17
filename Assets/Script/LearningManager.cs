@@ -12,10 +12,10 @@ public class LearningManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Caculition(10, TypeCalculation.Sum);
-        Caculition(10, TypeCalculation.Brand);
-        Caculition(10, TypeCalculation.Multiplication);
-        Caculition(10, TypeCalculation.Division);
+        //Caculition(10, TypeCalculation.Sum);
+        //Caculition(10, TypeCalculation.Brand);
+        //Caculition(10, TypeCalculation.Multiplication);
+        //Caculition(10, TypeCalculation.Division);
     }
 
     // Update is called once per frame
@@ -47,24 +47,24 @@ public class LearningManager : MonoBehaviour
         Debug.Log("FistNumber " + fistNumber + "SeconNumber: " + secondNumber + "Result" + result);
     }
 
-    //char GetTypeCalculation(TypeCalculation type)
-    //{
-    //    char c_Calculation;
-    //    switch (type)
-    //    {
-    //        case TypeCalculation.Sum:
-    //            c_Calculation = '+';
-    //            break;
-    //        case TypeCalculation.Brand:
-    //            c_Calculation = '-';
-    //            break;
-    //        case TypeCalculation.Multiplication:
-    //            c_Calculation =  '*';
-    //            break;
-    //        case TypeCalculation.Division:
-    //            c_Calculation =  '/';
-    //            break;
-    //    }
-    //    return c_Calculation;
-    //}
+    protected char GetTypeCalculation(TypeCalculation type)
+    {
+        //char c_Calculation;
+        switch (type)
+        {
+            case TypeCalculation.Sum:
+                cTypeCatution = '+';
+                break;
+            case TypeCalculation.Brand:
+                cTypeCatution = '-';
+                break;
+            case TypeCalculation.Multiplication:
+                cTypeCatution = '*';
+                break;
+            case TypeCalculation.Division:
+                cTypeCatution = '/';
+                break;
+        }
+        return cTypeCatution;
+    }
 }

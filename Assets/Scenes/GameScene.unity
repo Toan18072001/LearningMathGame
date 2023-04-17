@@ -18104,8 +18104,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1640689947}
         m_TargetAssemblyTypeName: UiManager, Assembly-CSharp
-        m_MethodName: ShowUI
-        m_Mode: 3
+        m_MethodName: ShowMenuGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -24241,10 +24241,10 @@ RectTransform:
   m_Father: {fileID: 1246963442}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 63.713608}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 213.13565, y: -56.5}
+  m_SizeDelta: {x: 132.89, y: 63.713608}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &442612042
 MonoBehaviour:
@@ -24810,10 +24810,10 @@ RectTransform:
   m_Father: {fileID: 1246963442}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 56}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100.19065, y: -56.5}
+  m_SizeDelta: {x: 53, y: 56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &447160786
 MonoBehaviour:
@@ -67372,7 +67372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1246963442
 RectTransform:
   m_ObjectHideFlags: 0

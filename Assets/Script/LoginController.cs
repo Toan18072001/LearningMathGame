@@ -26,7 +26,7 @@ public class LoginController : PlayFabManager
     {
         if (status == "LoginSuccess")
         {
-            UiManager.instance.ShowUI(4);
+           // UiManager.instance.ShowUI(4);
         }
         else
         {
