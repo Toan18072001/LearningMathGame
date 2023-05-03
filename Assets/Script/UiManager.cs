@@ -57,14 +57,41 @@ public class UiManager : MonoBehaviour
    
     public void GameOneSumOneNumber()
     {
-        //classOne.PlusOneDigit("1 + 1 chữ số");
-        //currentUI.SetActive(false);
-        //beforUI = currentUI;
-        //currentUI = classOne.gameObject;
-        //classOne.gameObject.SetActive(true);
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
-        ob.GetComponent<LearningClassOne>().PlusOneDigit("1 + 1 chữ số");
+        ob.GetComponent<LearningClassOne>().type = TypeOfTopic.OneSumOneNumber;
+        ob.GetComponent<LearningClassOne>().CaculationOneDigit("1 + 1 chữ số", TypeCalculation.Sum, 10);
+    }
+    public void GameOneBrandOneNumber()
+    {
+        GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
+        ob.SetActive(true);
+        ob.GetComponent<LearningClassOne>().type = TypeOfTopic.OneBrandOneNumber;
+        ob.GetComponent<LearningClassOne>().CaculationOneDigit("1 - 1 chữ số", TypeCalculation.Brand, 10);
+    }
+   
+    public void GameDoubleNumber()
+    {
+        GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
+        ob.SetActive(true);
+        ob.GetComponent<LearningClassOne>().type = TypeOfTopic.SumDoubleNumber;
+        ob.GetComponent<LearningClassOne>().CaculationDoubleNumber("Cộng gấp đôi", TypeCalculation.Sum, 10);
+    }
+
+    public void GameCompareNumber()
+    {
+        GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
+        ob.SetActive(true);
+        ob.GetComponent<LearningClassOne>().type = TypeOfTopic.Compare;
+        ob.GetComponent<LearningClassOne>().CaculationCompareNumber("Lớn, bé, Bằng (>, <, =)", 20);
+    }
+    public void GameSummaryCaculation()
+    {
+        GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
+        ob.SetActive(true);
+        ob.GetComponent<LearningClassOne>().SummaryCaculation();
+        ob.GetComponent<LearningClassOne>().maxCurentQuestion = 20;
+        ob.GetComponent<LearningClassOne>().isSummaryCaculation= true;
     }
     #endregion
 }

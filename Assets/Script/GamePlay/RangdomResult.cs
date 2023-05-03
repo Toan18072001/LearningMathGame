@@ -10,10 +10,17 @@ using Random = UnityEngine.Random;
 public class RangdomResult : MonoBehaviour
 {
     [SerializeField] List<GameObject> randomResult;
+
+    [SerializeField] GameObject numberBtns;
+    [SerializeField] GameObject compareBtns;
+
     public event Action<string> onResultChanged;
+    public event Action<string> onResultCompareChange;
     // Start is called before the first frame update
     public void InitResult(int _maxValue, float _resultSuccess)
     {
+        numberBtns.SetActive(true);
+        compareBtns.SetActive(false);
         int rd = Random.Range(0, randomResult.Count);
         Debug.Log("ranđomPos: " + rd);
         for(int i = 0; i < randomResult.Count; i++)
@@ -50,10 +57,16 @@ public class RangdomResult : MonoBehaviour
             }
         }
     }
+    public void InitResult()
+    {
+        compareBtns.SetActive(true);
+        numberBtns.SetActive(false);
+    }
     public void ChangeNumberResult(string result)
     {
         onResultChanged?.Invoke(result);
     }
+    
 
     public bool CheckLoopNumber(int maxIndex, string number)
     {

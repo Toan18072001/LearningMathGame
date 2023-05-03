@@ -13,11 +13,9 @@ public class LearningClassOne : LearningManager
     [SerializeField] TMP_Text label2;
 
     [Header("body")]
-    [SerializeField] TMP_Text numberOne;
-    [SerializeField] TMP_Text caculation;
-    [SerializeField] TMP_Text numberSecond;
-    [SerializeField] TMP_Text numberResult;
-    [SerializeField] TMP_Text countQuestion;
+    [SerializeField] TMP_Text countQuestionUI;
+    [SerializeField] UICaculation uICaculation;
+    [SerializeField] UICompareCaculation uICompareCaculation;
     [SerializeField] RangdomResult rd;
 
     [Header("icon")]
@@ -29,23 +27,48 @@ public class LearningClassOne : LearningManager
     [SerializeField] PopupQuitGame popupQuitGame;
 
     int currentQuestion = 1;
-    int maxCurentQuestion = 10;
+    public int maxCurentQuestion = 10;
+    public bool isSummaryCaculation = false;
+    public TypeOfTopic type;
+    
     private void Start()
     {
         //PlusOneDigit("1 + 1 chữ số");
         rd.onResultChanged += OnResultChanged;
         popupQuitGame.Click += DesTroyOb;
-
     }
 
-    public void PlusOneDigit(string label)
+    public void CaculationOneDigit(string label, TypeCalculation _type, int maxValue)
     {
-        currentQuestion = 1;
+        uICaculation.gameObject.SetActive(true);
+        uICompareCaculation.gameObject.SetActive(false);
         Setlabel(label);
-        Caculition(10, TypeCalculation.Sum);
-        SetUINumber(TypeCalculation.Sum);
-        rd.InitResult(10, result);
+        Caculition(maxValue, _type);
+        rd.InitResult(maxValue, result);
+        SetUINumber(_type);
     }
+ 
+    public void CaculationDoubleNumber(string label, TypeCalculation _type, int maxValue)
+    {
+        uICaculation.gameObject.SetActive(true);
+        uICompareCaculation.gameObject.SetActive(false);
+        Setlabel(label);
+        CaculitionDouble(maxValue,_type);
+        rd.InitResult(maxValue, result);
+        SetUINumber(_type);
+    }
+    public void CaculationCompareNumber(string label, int maxValue)
+    {
+        uICompareCaculation.gameObject.SetActive(true);
+        uICaculation.gameObject.SetActive(false);
+        Setlabel(label);
+        CaculitionCompare(maxValue);
+        SetUINumber(TypeCalculation.ComparisonSpells);
+        uICaculation.gameObject.SetActive(false);
+        rd.InitResult();
+
+    }
+
     public void Setlabel(string label)
     {
         label1.text = label;
@@ -53,52 +76,141 @@ public class LearningClassOne : LearningManager
     }
     public void SetUINumber(TypeCalculation type)
     {
-        numberOne.text = fistNumber.ToString();
-        numberSecond.text = secondNumber.ToString();
-        caculation.text = GetTypeCalculation(TypeCalculation.Sum).ToString();
-        numberResult.text = "";
+        if (TypeCalculation.ComparisonSpells != type)
+        {
+            uICaculation.Init(fistNumber.ToString(), secondNumber.ToString(), GetTypeCalculation(type).ToString());
+        }
+        else
+        {
+            uICompareCaculation.Init(fistNumber.ToString(), secondNumber.ToString());
+        }
     }
 
     public void OnResultChanged(string _result)
     {
-        numberResult.text = _result;
-        if(_result == result.ToString())
+        Debug.Log("Player Result: " + _result);
+        if (uICaculation.gameObject.active)
         {
-            icon.gameObject.SetActive(true);
-            currentQuestion++;
-            icon.sprite = sucess;
-            icon.color = Color.green;
-            StartCoroutine(GenerateQuestion());
-            StartCoroutine(EnableQuestionIcon());
+            uICaculation.SetResultUI(_result);
+            if (_result == result.ToString())
+            {
+                ResultSucces();
+            }
+            else
+            {
+                ResultWrong();
+            }
         }
         else
         {
-            icon.gameObject.SetActive(true);
-            icon.sprite = wrong;
-            icon.color = Color.red;
-            StartCoroutine(EnableQuestionIcon());
+            uICompareCaculation.SetResultUI(_result);
+            if(fistNumber > secondNumber && _result == ">")
+            {
+                ResultSucces();
+            }else if (fistNumber == secondNumber && _result == "=")
+            {
+                ResultSucces();
+            }
+            else if (fistNumber < secondNumber && _result == "<")
+            {
+                ResultSucces();
+            }else
+            { 
+                ResultWrong();
+            }
         }
+        
     }
-
+    public void ResultSucces()
+    {
+        icon.gameObject.SetActive(true);
+        icon.sprite = sucess;
+        icon.color = Color.green;
+        StartCoroutine(GenerateQuestion());
+        currentQuestion++;
+    }
+    public void ResultWrong()
+    {
+        icon.gameObject.SetActive(true);
+        icon.sprite = wrong;
+        icon.color = Color.red;
+        StartCoroutine(EnableQuestionIcon());
+    }
     public void ShowPopupQuitGame()
     {
         popupQuitGame.gameObject.SetActive(true);
     }
+    public void SummaryCaculation()
+    {
+    
+        countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
+        isSummaryCaculation = true;
+        GenerateType(TypeOfTopic.OneSumOneNumber);
+        if (currentQuestion <= 5)
+        {
+            GenerateType(TypeOfTopic.OneSumOneNumber);
+        }
+        else if (currentQuestion > 5 && currentQuestion <= 10)
+        {
+            GenerateType(TypeOfTopic.OneBrandOneNumber);
+        }
+        else if (currentQuestion > 10 && currentQuestion <= 15)
+        {
+            GenerateType(TypeOfTopic.SumDoubleNumber);
+        }
+        else
+        {
+            GenerateType(TypeOfTopic.Compare);
+        }
 
+    }
+    
     void DesTroyOb()
     {
         Destroy(transform.gameObject);
     }
     IEnumerator GenerateQuestion()
     {
-        yield return new WaitForSeconds(2);
-        countQuestion.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
-        PlusOneDigit("1 + 1 chữ số");
+        yield return new WaitForSeconds(1.5f);
+        countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
+        icon.gameObject.SetActive(false);
+        if (!isSummaryCaculation)
+        {
+            GenerateType(type);
+        }
+        else
+        {
+            SummaryCaculation();
+        }
     }
     IEnumerator EnableQuestionIcon()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         icon.gameObject.SetActive(false);
-        numberResult.text = "";
+        uICaculation.ClearResultUI();
+        uICompareCaculation.ClearResultUI();
+    }
+
+    void GenerateType(TypeOfTopic typeOfTopic)
+    {
+        switch (typeOfTopic)
+        {
+            case TypeOfTopic.OneSumOneNumber:
+                CaculationOneDigit("1 + 1 chữ số",TypeCalculation.Sum,10);
+                uICaculation.gameObject.SetActive(true);
+                break;
+            case TypeOfTopic.SumDoubleNumber:
+                CaculationDoubleNumber("Cộng gấp đôi", TypeCalculation.Sum, 10);
+                uICaculation.gameObject.SetActive(true);
+                break;
+            case TypeOfTopic.OneBrandOneNumber:
+                CaculationOneDigit("1 - 1 chữ số", TypeCalculation.Brand, 10);
+                uICaculation.gameObject.SetActive(true);
+                break;
+            case TypeOfTopic.Compare:
+                CaculationCompareNumber("Lớn, bé, Bằng (>, <, =)", 20);
+                break;
+
+        }
     }
 }

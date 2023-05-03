@@ -12,10 +12,7 @@ public class LearningManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Caculition(10, TypeCalculation.Sum);
-        //Caculition(10, TypeCalculation.Brand);
-        //Caculition(10, TypeCalculation.Multiplication);
-        //Caculition(10, TypeCalculation.Division);
+       
     }
 
     // Update is called once per frame
@@ -26,7 +23,33 @@ public class LearningManager : MonoBehaviour
     protected void Caculition(int maxValue, TypeCalculation type)
     {
         fistNumber = Random.Range(0, maxValue);
-        secondNumber = Random.Range(0, maxValue - fistNumber);
+      //  secondNumber = Random.Range(0, maxValue - fistNumber);
+
+        switch (type)
+        {
+            case TypeCalculation.Sum:
+                secondNumber = Random.Range(0, maxValue - fistNumber);
+                result = fistNumber + secondNumber;
+                break;
+            case TypeCalculation.Brand:
+                secondNumber = Random.Range(0,fistNumber);
+                result = fistNumber - secondNumber;
+                break;
+            case TypeCalculation.Multiplication:
+                result = fistNumber * secondNumber;
+                break;
+            case TypeCalculation.Division:
+                result = (float)fistNumber / (float)secondNumber;
+                break;
+        }
+        
+        Debug.Log("FistNumber " + fistNumber + "SeconNumber: " + secondNumber + "Result" + result);
+    }
+
+    protected void CaculitionDouble(int maxValue, TypeCalculation type)
+    {
+        fistNumber = Random.Range(0, maxValue);
+        secondNumber = fistNumber;
 
         switch (type)
         {
@@ -43,10 +66,16 @@ public class LearningManager : MonoBehaviour
                 result = (float)fistNumber / (float)secondNumber;
                 break;
         }
-        
+
         Debug.Log("FistNumber " + fistNumber + "SeconNumber: " + secondNumber + "Result" + result);
     }
+    protected void CaculitionCompare(int maxValue)
+    {
+        fistNumber = Random.Range(0, maxValue);
+        secondNumber = Random.Range(0, maxValue);
 
+        Debug.Log("FistNumber " + fistNumber + "SeconNumber: " + secondNumber);
+    }
     protected char GetTypeCalculation(TypeCalculation type)
     {
         //char c_Calculation;
@@ -62,7 +91,7 @@ public class LearningManager : MonoBehaviour
                 cTypeCatution = '*';
                 break;
             case TypeCalculation.Division:
-                cTypeCatution = '/';
+                cTypeCatution = ':';
                 break;
         }
         return cTypeCatution;
