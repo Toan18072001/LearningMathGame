@@ -1,9 +1,6 @@
 ﻿using PlayFab.ClientModels;
 using PlayFab;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.PackageManager;
 using System;
 
 public class PlayFabManager : MonoBehaviour

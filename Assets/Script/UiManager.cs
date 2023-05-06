@@ -9,9 +9,6 @@ public class UiManager : MonoBehaviour
     [Header("Class Object")]
     [SerializeField] LearningClassOne classOne;
 
-    [Header("PopupObject")]
-    [SerializeField] PopupQuitGame popupQuitGame;
-
     [SerializeField] GameObject parent;
     [SerializeField] private GameObject currentUI;
     [SerializeField] private GameObject beforUI;
@@ -48,18 +45,13 @@ public class UiManager : MonoBehaviour
     #endregion
 
     #region Ref UI
-    
-    public void BackMenuGameUI()
-    {
-        Debug.Log("ckick");
-        popupQuitGame.gameObject.SetActive(true);
-    }
    
     public void GameOneSumOneNumber()
     {
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
         ob.GetComponent<LearningClassOne>().type = TypeOfTopic.OneSumOneNumber;
+        ob.GetComponent<LearningClassOne>().maxCurentQuestion = 10;
         ob.GetComponent<LearningClassOne>().CaculationOneDigit("1 + 1 chữ số", TypeCalculation.Sum, 10);
     }
     public void GameOneBrandOneNumber()
@@ -67,6 +59,7 @@ public class UiManager : MonoBehaviour
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
         ob.GetComponent<LearningClassOne>().type = TypeOfTopic.OneBrandOneNumber;
+        ob.GetComponent<LearningClassOne>().maxCurentQuestion = 10;
         ob.GetComponent<LearningClassOne>().CaculationOneDigit("1 - 1 chữ số", TypeCalculation.Brand, 10);
     }
    
@@ -75,6 +68,7 @@ public class UiManager : MonoBehaviour
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
         ob.GetComponent<LearningClassOne>().type = TypeOfTopic.SumDoubleNumber;
+        ob.GetComponent<LearningClassOne>().maxCurentQuestion = 10;
         ob.GetComponent<LearningClassOne>().CaculationDoubleNumber("Cộng gấp đôi", TypeCalculation.Sum, 10);
     }
 
@@ -83,6 +77,7 @@ public class UiManager : MonoBehaviour
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
         ob.GetComponent<LearningClassOne>().type = TypeOfTopic.Compare;
+        ob.GetComponent<LearningClassOne>().maxCurentQuestion = 10;
         ob.GetComponent<LearningClassOne>().CaculationCompareNumber("Lớn, bé, Bằng (>, <, =)", 20);
     }
     public void GameSummaryCaculation()

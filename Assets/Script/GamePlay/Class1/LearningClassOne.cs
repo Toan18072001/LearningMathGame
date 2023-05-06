@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using TMPro.EditorUtilities;
 using System;
 using UnityEngine.UI;
 
@@ -27,7 +26,7 @@ public class LearningClassOne : LearningManager
     [SerializeField] PopupQuitGame popupQuitGame;
 
     int currentQuestion = 1;
-    public int maxCurentQuestion = 10;
+    public int maxCurentQuestion;
     public bool isSummaryCaculation = false;
     public TypeOfTopic type;
     
@@ -36,6 +35,8 @@ public class LearningClassOne : LearningManager
         //PlusOneDigit("1 + 1 chữ số");
         rd.onResultChanged += OnResultChanged;
         popupQuitGame.Click += DesTroyOb;
+        countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
+
     }
 
     public void CaculationOneDigit(string label, TypeCalculation _type, int maxValue)
@@ -95,6 +96,9 @@ public class LearningClassOne : LearningManager
             if (_result == result.ToString())
             {
                 ResultSucces();
+                Debug.Log("curent qes: " + currentQuestion);
+                countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
+
             }
             else
             {
@@ -107,34 +111,45 @@ public class LearningClassOne : LearningManager
             if(fistNumber > secondNumber && _result == ">")
             {
                 ResultSucces();
-            }else if (fistNumber == secondNumber && _result == "=")
+                Debug.Log("curent qes: " + currentQuestion);
+                countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
+
+
+            }
+            else if (fistNumber == secondNumber && _result == "=")
             {
                 ResultSucces();
+                Debug.Log("curent qes: " + currentQuestion);
+                countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
+
             }
             else if (fistNumber < secondNumber && _result == "<")
             {
                 ResultSucces();
-            }else
+                Debug.Log("curent qes: " + currentQuestion);
+                countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
+
+            }
+            else
             { 
                 ResultWrong();
             }
         }
-        
     }
     public void ResultSucces()
     {
+        StartCoroutine(GenerateQuestion());
         icon.gameObject.SetActive(true);
         icon.sprite = sucess;
         icon.color = Color.green;
-        StartCoroutine(GenerateQuestion());
         currentQuestion++;
     }
     public void ResultWrong()
     {
+        StartCoroutine(EnableQuestionIcon());
         icon.gameObject.SetActive(true);
         icon.sprite = wrong;
         icon.color = Color.red;
-        StartCoroutine(EnableQuestionIcon());
     }
     public void ShowPopupQuitGame()
     {
@@ -142,10 +157,7 @@ public class LearningClassOne : LearningManager
     }
     public void SummaryCaculation()
     {
-    
-        countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
         isSummaryCaculation = true;
-        GenerateType(TypeOfTopic.OneSumOneNumber);
         if (currentQuestion <= 5)
         {
             GenerateType(TypeOfTopic.OneSumOneNumber);
@@ -172,7 +184,6 @@ public class LearningClassOne : LearningManager
     IEnumerator GenerateQuestion()
     {
         yield return new WaitForSeconds(1.5f);
-        countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
         icon.gameObject.SetActive(false);
         if (!isSummaryCaculation)
         {
