@@ -24,6 +24,10 @@ public class LearningClassOne : LearningManager
 
     [Header("Popup")]
     [SerializeField] PopupQuitGame popupQuitGame;
+    [SerializeField] PopupEndGame popupEndGame;
+
+    [Header("List Ob Caculation")]
+    [SerializeField] List<GameObject> gameObCaculation;
 
     int currentQuestion = 1;
     public int maxCurentQuestion;
@@ -35,14 +39,26 @@ public class LearningClassOne : LearningManager
         //PlusOneDigit("1 + 1 chữ số");
         rd.onResultChanged += OnResultChanged;
         popupQuitGame.Click += DesTroyOb;
+        popupEndGame.Click += DesTroyOb;
         countQuestionUI.text = currentQuestion.ToString() + "/" + maxCurentQuestion.ToString();
 
     }
-
+    void OpenObject(GameObject _ob)
+    {
+        for(int i = 0; i < gameObCaculation.Count; i++)
+        {
+            if (gameObCaculation[i] == _ob)
+            {
+                gameObCaculation[i].SetActive(true);
+            }
+            else gameObCaculation[i].SetActive(false);
+        }
+    }
     public void CaculationOneDigit(string label, TypeCalculation _type, int maxValue)
     {
-        uICaculation.gameObject.SetActive(true);
-        uICompareCaculation.gameObject.SetActive(false);
+        OpenObject(uICaculation.gameObject);
+        //uICaculation.gameObject.SetActive(true);
+        //uICompareCaculation.gameObject.SetActive(false);
         Setlabel(label);
         Caculition(maxValue, _type);
         rd.InitResult(maxValue, result);
@@ -51,8 +67,9 @@ public class LearningClassOne : LearningManager
  
     public void CaculationDoubleNumber(string label, TypeCalculation _type, int maxValue)
     {
-        uICaculation.gameObject.SetActive(true);
-        uICompareCaculation.gameObject.SetActive(false);
+        //uICaculation.gameObject.SetActive(true);
+        //uICompareCaculation.gameObject.SetActive(false);
+        OpenObject(uICaculation.gameObject);
         Setlabel(label);
         CaculitionDouble(maxValue,_type);
         rd.InitResult(maxValue, result);
@@ -60,8 +77,9 @@ public class LearningClassOne : LearningManager
     }
     public void CaculationCompareNumber(string label, int maxValue)
     {
-        uICompareCaculation.gameObject.SetActive(true);
-        uICaculation.gameObject.SetActive(false);
+        //uICompareCaculation.gameObject.SetActive(true);
+        //uICaculation.gameObject.SetActive(false);
+        OpenObject(uICompareCaculation.gameObject);
         Setlabel(label);
         CaculitionCompare(maxValue);
         SetUINumber(TypeCalculation.ComparisonSpells);
@@ -138,11 +156,22 @@ public class LearningClassOne : LearningManager
     }
     public void ResultSucces()
     {
-        StartCoroutine(GenerateQuestion());
-        icon.gameObject.SetActive(true);
-        icon.sprite = sucess;
-        icon.color = Color.green;
-        currentQuestion++;
+        if (isSummaryCaculation && currentQuestion >20)
+        {
+            popupEndGame.gameObject.SetActive(true);
+            Debug.Log("end game");
+        }else if(!isSummaryCaculation && currentQuestion >= 10)
+        {
+            popupEndGame.gameObject.SetActive(true);
+            Debug.Log("end game");
+        }else
+        {
+            currentQuestion++;
+            StartCoroutine(GenerateQuestion());
+            icon.gameObject.SetActive(true);
+            icon.sprite = sucess;
+            icon.color = Color.green;
+        }
     }
     public void ResultWrong()
     {

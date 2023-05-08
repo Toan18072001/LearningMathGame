@@ -12,6 +12,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] GameObject parent;
     [SerializeField] private GameObject currentUI;
     [SerializeField] private GameObject beforUI;
+    [SerializeField] List<GameObject> obClass;
     private void Awake()
     {
         instance = this;
@@ -46,39 +47,39 @@ public class UiManager : MonoBehaviour
 
     #region Ref UI
    
-    public void GameOneSumOneNumber()
+    public void GameOneSumOneNumber(int value)
     {
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
         ob.GetComponent<LearningClassOne>().type = TypeOfTopic.OneSumOneNumber;
         ob.GetComponent<LearningClassOne>().maxCurentQuestion = 10;
-        ob.GetComponent<LearningClassOne>().CaculationOneDigit("1 + 1 chữ số", TypeCalculation.Sum, 10);
+        ob.GetComponent<LearningClassOne>().CaculationOneDigit("1 + 1 chữ số", TypeCalculation.Sum, value);
     }
-    public void GameOneBrandOneNumber()
+    public void GameOneBrandOneNumber(int value)
     {
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
         ob.GetComponent<LearningClassOne>().type = TypeOfTopic.OneBrandOneNumber;
         ob.GetComponent<LearningClassOne>().maxCurentQuestion = 10;
-        ob.GetComponent<LearningClassOne>().CaculationOneDigit("1 - 1 chữ số", TypeCalculation.Brand, 10);
+        ob.GetComponent<LearningClassOne>().CaculationOneDigit("1 - 1 chữ số", TypeCalculation.Brand, value);
     }
    
-    public void GameDoubleNumber()
+    public void GameDoubleNumber(int value)
     {
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
         ob.GetComponent<LearningClassOne>().type = TypeOfTopic.SumDoubleNumber;
         ob.GetComponent<LearningClassOne>().maxCurentQuestion = 10;
-        ob.GetComponent<LearningClassOne>().CaculationDoubleNumber("Cộng gấp đôi", TypeCalculation.Sum, 10);
+        ob.GetComponent<LearningClassOne>().CaculationDoubleNumber("Cộng gấp đôi", TypeCalculation.Sum, value);
     }
 
-    public void GameCompareNumber()
+    public void GameCompareNumber(int value)
     {
         GameObject ob = Instantiate(classOne, parent.transform.position, Quaternion.identity, parent.transform).gameObject;
         ob.SetActive(true);
         ob.GetComponent<LearningClassOne>().type = TypeOfTopic.Compare;
         ob.GetComponent<LearningClassOne>().maxCurentQuestion = 10;
-        ob.GetComponent<LearningClassOne>().CaculationCompareNumber("Lớn, bé, Bằng (>, <, =)", 20);
+        ob.GetComponent<LearningClassOne>().CaculationCompareNumber("Lớn, bé, Bằng (>, <, =)", value);
     }
     public void GameSummaryCaculation()
     {
