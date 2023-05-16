@@ -95,15 +95,15 @@ public class UiManager : MonoBehaviour
 	public void GameWithQuestionContent()
 	{
 		var ob = Instantiate(classTwo, parent.transform.position, Quaternion.identity, parent.transform);
-		classTwo.OnShowType(0);
 		ob.gameObject.SetActive(true);
+		classTwo.OnShowType(0);
 	}
 
 	public void GameWithQuestionFindNumber()
 	{
 		var ob = Instantiate(classTwo, parent.transform.position, Quaternion.identity, parent.transform);
-		classTwo.OnShowType(1);
 		ob.gameObject.SetActive(true);
+		classTwo.OnShowType(1);
 	}
 
 	public void GameWithShape()

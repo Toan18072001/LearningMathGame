@@ -32,14 +32,11 @@ public class LearningClassTwo : LearningManager
 	protected Question[] _questionDatas;
 	protected int _result = 0;
 	protected int _showType = 0;
+
 	private void Start()
 	{
-		_questionDatas = JsonConvert.DeserializeObject<Question[]>(_questionResource.text);
-		//LoadQuestionTypeFindNumber(4, 8);
-		//LoadQuestion(_questionDatas[Random.Range(0, _questionDatas.Length)]);
 		LoadQuestion();
 	}
-
 	private void OnEnable()
 	{
 		rd.onResultChanged += OnResultChanged;
@@ -58,10 +55,12 @@ public class LearningClassTwo : LearningManager
 	public void OnShowType(int type)
 	{
 		_showType = type;
-		LoadQuestion();
+
 	}
 	public void LoadQuestionTypeFindNumber(int max, int min)
 	{
+		_contentTxt.gameObject.SetActive(false);
+		_questionTxt.gameObject.SetActive(false);
 		List<TypeCalculation> types = new List<TypeCalculation>();
 		List<int> values = new List<int>();
 		int randValue = Random.Range(min, max);
@@ -147,8 +146,10 @@ public class LearningClassTwo : LearningManager
 				break;
 		}
 	}
+
 	public void LoadQuestion()
 	{
+		_questionDatas = JsonConvert.DeserializeObject<Question[]>(_questionResource.text);
 		switch (_showType)
 		{
 			case 0:
@@ -158,11 +159,12 @@ public class LearningClassTwo : LearningManager
 				LoadQuestionTypeFindNumber(10, 20);
 				break;
 		}
-		LoadQuestionTypeFindNumber(10, 50);
 	}
 
 	public void LoadQuestionContent(Question question)
 	{
+		_contentTxt.gameObject.SetActive(true);
+		_questionTxt.gameObject.SetActive(true);
 		int maxValue = 100;
 		///rd.InitResult(maxValue, result);
 		Caculition(maxValue, GetEnumTypeCalculation(question.formular));
@@ -173,15 +175,15 @@ public class LearningClassTwo : LearningManager
 
 		GetFormular(question.formular, maxValue, ref numb1, ref numb2, ref numb3);
 		int randomQuestion = Random.Range(0, question.question.Length);
-		string value1 = randomQuestion == 0 ? "[X]" : numb1.ToString();
-		string value2 = randomQuestion == 1 ? "[X]" : numb2.ToString();
-		string value3 = randomQuestion == 2 ? "[X]" : numb3.ToString();
+		string value1 = randomQuestion == 0 ? "?" : numb1.ToString();
+		string value2 = randomQuestion == 1 ? "?" : numb2.ToString();
+		string value3 = randomQuestion == 2 ? "?" : numb3.ToString();
 		_contentTxt.text = string.Format(question.content,
 			value1,
 			value2,
 			value3,
-			(question.objectRandom.Length >= 1 ? question.objectRandom[0][UnityEngine.Random.Range(0, question.objectRandom[0].Length)] : string.Empty),
-			(question.objectRandom.Length >= 2 ? question.objectRandom[1][UnityEngine.Random.Range(0, question.objectRandom[1].Length)] : string.Empty)
+			(question.randomText.Length >= 1 ? question.randomText[0][UnityEngine.Random.Range(0, question.randomText[0].Length)] : string.Empty),
+			(question.randomText.Length >= 2 ? question.randomText[1][UnityEngine.Random.Range(0, question.randomText[1].Length)] : string.Empty)
 			);
 
 		_questionTxt.text =
@@ -190,11 +192,12 @@ public class LearningClassTwo : LearningManager
 			value1,
 			value2,
 			value3,
-			(question.objectRandom.Length >= 1 ? question.objectRandom[0][UnityEngine.Random.Range(0, question.objectRandom[0].Length)] : string.Empty),
-			(question.objectRandom.Length >= 2 ? question.objectRandom[1][UnityEngine.Random.Range(0, question.objectRandom[1].Length)] : string.Empty)
+			(question.randomText.Length >= 1 ? question.randomText[0][UnityEngine.Random.Range(0, question.randomText[0].Length)] : string.Empty),
+			(question.randomText.Length >= 2 ? question.randomText[1][UnityEngine.Random.Range(0, question.randomText[1].Length)] : string.Empty)
 			);
 		_result = randomQuestion == 0 ? numb1 : (randomQuestion == 1 ? numb2 : numb3);
-		_uICaculation.Init(value1, value2, value3, GetTypeCalculation(question.formular).ToString(), randomQuestion, "[X]");
+		string data = string.Format("{0} {1} {2} = {3}", value1, GetTypeCalculation(question.formular), value2, value3);
+		_formular.SpawnFormular(data);
 		rd.InitResult(maxValue, _result);
 	}
 
@@ -321,4 +324,14 @@ public class LearningClassTwo : LearningManager
 		icon.gameObject.SetActive(false);
 		LoadQuestion();
 	}
+}
+
+
+[System.Serializable]
+public class Question
+{
+	public string content;
+	public string[] question;
+	public int formular;
+	public string[][] randomText;
 }

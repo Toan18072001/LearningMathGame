@@ -18,7 +18,7 @@ public class LearningClassThree : LearningManager
 	[SerializeField] TMP_Text countQuestionUI;
 	[SerializeField] protected TextMeshProUGUI _contentTxt;
 	[SerializeField] protected UICaculation _uICaculation;
-	[SerializeField] protected TextMeshProUGUI _questionTxt;
+	[SerializeField] protected FormularController _formular;
 	[SerializeField] protected RangdomResult rd;
 
 	[SerializeField] protected TextMeshProUGUI _customText1;
@@ -110,13 +110,13 @@ public class LearningClassThree : LearningManager
 		{
 			case 0:
 				_contentTxt.text = string.Format("Cho hình tròn có bán kính là {0} . Tìm diện tích hình tròn?", numb1);
-				_questionTxt.text = string.Format("R = {0}, S=?", numb1);
+				_formular.SpawnFormular(string.Format("R = {0} , S = ?", numb1));
 				_result = numb2;
 				rd.InitResult(100, numb2);
 				break;
 			case 1:
 				_contentTxt.text = string.Format("Cho hình tròn có diện tích là {0} . Tìm bán kính hình tròn?", numb2);
-				_questionTxt.text = string.Format("S = {0}, R=?", numb2);
+				_formular.SpawnFormular(string.Format("S = {0} , R = ?", numb2));
 				_result = numb1;
 				rd.InitResult(100, numb1);
 				break;
@@ -167,17 +167,17 @@ public class LearningClassThree : LearningManager
 		{
 			case 0:
 				_contentTxt.text = string.Format("Cho hình tam giác có độ dài cạnh đáy là {0} và chiều cao từ cạnh đáy là {1}. Tìm diện tích hình tam giác?", numb1, numb2);
-				_questionTxt.text = string.Format("a = {0} , h = {1}\n S=?", numb1, numb2);
+				_formular.SpawnFormular(string.Format("a = {0} , h = {1} S = ?", numb1, numb2));
 				rd.InitResult(100, numb3);
 				break;
 			case 1:
 				_contentTxt.text = string.Format("Cho hình tam giác có diện tích là {0} và chiều cao từ cạnh đáy là {1}. Tìm độ dài cạnh đáy hình tam giác?", numb1, numb2);
-				_questionTxt.text = string.Format("S = {0} , h = {1}\n a=?", numb3, numb2);
+				_formular.SpawnFormular(string.Format("S = {0} , h = {1}  a = ?", numb3, numb2));
 				rd.InitResult(100, numb1);
 				break;
 			case 2:
 				_contentTxt.text = string.Format("Cho hình tam giác diện tích là {0} và độ dài cạnh đáy là {1}. Tìm chiều cao từ cạnh đáy?", numb1, numb2);
-				_questionTxt.text = string.Format("S = {0} , a= {1}\n h=?", numb3, numb1);
+				_formular.SpawnFormular(string.Format("S = {0} , a= {1}  h = ?", numb3, numb1));
 				rd.InitResult(100, numb2);
 				break;
 		}
@@ -242,11 +242,3 @@ public class LearningClassThree : LearningManager
 	}
 }
 
-[System.Serializable]
-public class Question
-{
-	public string content;
-	public string[] question;
-	public int formular;
-	public string[][] objectRandom;
-}

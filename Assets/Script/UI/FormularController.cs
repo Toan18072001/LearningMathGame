@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class FormularController : MonoBehaviour
 {
 	[SerializeField] private FormularItem _prefab;
@@ -11,7 +11,6 @@ public class FormularController : MonoBehaviour
 
 	public void SpawnFormular(string formular)
 	{
-		StopAllCoroutines();
 		for (int i = 0; i < _items.Count; i++)
 		{
 			_items[i].gameObject.SetActive(false);
