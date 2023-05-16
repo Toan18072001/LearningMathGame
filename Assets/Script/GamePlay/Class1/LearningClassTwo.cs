@@ -5,6 +5,7 @@ using TMPro;
 //using System;
 using UnityEngine.UI;
 using Newtonsoft.Json;
+using System.Linq;
 
 public class LearningClassTwo : LearningManager
 {
@@ -15,6 +16,7 @@ public class LearningClassTwo : LearningManager
 	[SerializeField] protected UICaculation _uICaculation;
 	[SerializeField] protected TextMeshProUGUI _questionTxt;
 	[SerializeField] protected RangdomResult rd;
+	[SerializeField] protected FormularController _formular;
 
 	[Header("Popup")]
 	[SerializeField] PopupQuitGame popupQuitGame;
@@ -29,10 +31,13 @@ public class LearningClassTwo : LearningManager
 	protected int _maxCurentQuestion = 20;
 	protected Question[] _questionDatas;
 	protected int _result = 0;
+	protected int _showType = 0;
 	private void Start()
 	{
 		_questionDatas = JsonConvert.DeserializeObject<Question[]>(_questionResource.text);
-		LoadQuestion(_questionDatas[Random.Range(0, _questionDatas.Length)]);
+		//LoadQuestionTypeFindNumber(4, 8);
+		//LoadQuestion(_questionDatas[Random.Range(0, _questionDatas.Length)]);
+		LoadQuestion();
 	}
 
 	private void OnEnable()
@@ -48,7 +53,115 @@ public class LearningClassTwo : LearningManager
 		popupQuitGame.Click -= DesTroyOb;
 		popupEndGame.Click -= DesTroyOb;
 	}
-	public void LoadQuestion(Question question)
+
+
+	public void OnShowType(int type)
+	{
+		_showType = type;
+		LoadQuestion();
+	}
+	public void LoadQuestionTypeFindNumber(int max, int min)
+	{
+		List<TypeCalculation> types = new List<TypeCalculation>();
+		List<int> values = new List<int>();
+		int randValue = Random.Range(min, max);
+		GetRandFomular(randValue, ref types, ref values);
+		bool isRight = Random.Range(0, 100) >= 50;
+		if (!isRight)
+		{
+			int randomIndex = Random.Range(0, values.Count);
+			_result = values[randomIndex];
+			values[randomIndex] = -1;
+		}
+		string left = string.Format("{0} {1} {2} {3} {4}",
+			values[0] < 0 ? "?" : values[0],
+			GetTypeCalculation(types[0]),
+			values[1] < 0 ? "?" : values[1],
+			types.Count >= 2 ? GetTypeCalculation(types[1]) : string.Empty,
+			values.Count >= 3 ? (values[2] < 0 ? "?" : values[2]) : string.Empty);
+
+		values.Clear();
+		types.Clear();
+		GetRandFomular(randValue, ref types, ref values);
+
+
+
+
+		if (isRight)
+		{
+			int randomIndex = Random.Range(0, values.Count);
+			_result = values[randomIndex];
+			values[randomIndex] = -1;
+		}
+		rd.InitResult(randValue, _result);
+		string right = string.Format("{0} {1} {2} {3} {4}",
+			values[0] < 0 ? "?" : values[0],
+			GetTypeCalculation(types[0]),
+			values[1] < 0 ? "?" : values[1],
+			types.Count >= 2 ? GetTypeCalculation(types[1]) : string.Empty,
+			values.Count >= 3 ? (values[2] < 0 ? "?" : values[2]) : string.Empty);
+
+		_formular.SpawnFormular(left.Trim() + " = " + right.Trim());
+
+	}
+
+	public void GetRandFomular(int value, ref List<TypeCalculation> types, ref List<int> values)
+	{
+		int random = 0;
+		switch (Random.Range(0, 4))
+		{
+			case 0:
+				random = Random.Range(2, value);
+				int devide = value / random;
+				int modulo = value % random;
+				values.Add(random);
+				types.Add(TypeCalculation.Multiplication);
+				values.Add(devide);
+				if (modulo != 0)
+				{
+					types.Add(TypeCalculation.Sum);
+					values.Add(modulo);
+				}
+				break;
+			case 1:
+				random = Random.Range(2, value);
+				int multiply = value * random;
+				values.Add(multiply);
+				types.Add(TypeCalculation.Division);
+				values.Add(random);
+				break;
+			case 2:
+				random = Random.Range(2, value);
+
+				int substract = value - random;
+				values.Add(random);
+				types.Add(TypeCalculation.Sum);
+				values.Add(substract);
+				break;
+			case 3:
+				random = Random.Range(2, value);
+				int sum = value + random;
+				values.Add(sum);
+				types.Add(TypeCalculation.Brand);
+				values.Add(random);
+				break;
+		}
+	}
+	public void LoadQuestion()
+	{
+		switch (_showType)
+		{
+			case 0:
+				LoadQuestionContent(_questionDatas[Random.Range(0, _questionDatas.Length)]);
+				break;
+			case 1:
+				LoadQuestionTypeFindNumber(10, 20);
+				break;
+		}
+		LoadQuestionTypeFindNumber(10, 50);
+	}
+
+	public void LoadQuestionContent(Question question)
 	{
 		int maxValue = 100;
 		///rd.InitResult(maxValue, result);
@@ -139,13 +252,13 @@ public class LearningClassTwo : LearningManager
 		//char c_Calculation;
 		switch (type)
 		{
-			case 1:
-				return TypeCalculation.Sum;
 			case 2:
+				return TypeCalculation.Sum;
+			case 3:
 				return TypeCalculation.Brand;
 			case 0:
 				return TypeCalculation.Multiplication;
-			case 3:
+			case 1:
 				return TypeCalculation.Division;
 		}
 		return TypeCalculation.Sum;
@@ -155,7 +268,7 @@ public class LearningClassTwo : LearningManager
 
 		if (_uICaculation.gameObject.activeSelf)
 		{
-			_uICaculation.SetResultUI(result);
+			_formular.SetResult(result);
 			if (result == _result.ToString())
 			{
 				ResultSucces();
@@ -198,13 +311,14 @@ public class LearningClassTwo : LearningManager
 	{
 		yield return new WaitForSeconds(1.5f);
 		icon.gameObject.SetActive(false);
-		_uICaculation.ClearResultUI();
+		//_uICaculation.ClearResultUI();
+		_formular.SetResult("?");
 	}
 
 	protected IEnumerator IEGenerateQuestion()
 	{
 		yield return new WaitForSeconds(1.5f);
 		icon.gameObject.SetActive(false);
-		LoadQuestion(_questionDatas[Random.Range(0, _questionDatas.Length)]);
+		LoadQuestion();
 	}
 }

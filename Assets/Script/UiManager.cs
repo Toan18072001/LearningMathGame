@@ -92,9 +92,17 @@ public class UiManager : MonoBehaviour
 		ob.GetComponent<LearningClassOne>().isSummaryCaculation = true;
 	}
 
-	public void GameWithQuestion()
+	public void GameWithQuestionContent()
 	{
 		var ob = Instantiate(classTwo, parent.transform.position, Quaternion.identity, parent.transform);
+		classTwo.OnShowType(0);
+		ob.gameObject.SetActive(true);
+	}
+
+	public void GameWithQuestionFindNumber()
+	{
+		var ob = Instantiate(classTwo, parent.transform.position, Quaternion.identity, parent.transform);
+		classTwo.OnShowType(1);
 		ob.gameObject.SetActive(true);
 	}
 
