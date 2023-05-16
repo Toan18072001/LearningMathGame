@@ -33,12 +33,17 @@ public class LearningClassThree : LearningManager
 	[SerializeField] Sprite sucess;
 	[SerializeField] Sprite wrong;
 
+
+	protected string[] _unitWeight = new string[] { "Gam", "Đềcagam", "Hectôgam", "Kilogam", "Yến", "Tạ", "Tấn", };
+	protected string[] _unitHeight = new string[] { "Milimet", "Centimet", "Decimet", "Met", "Đềcamet", "Hectômet", "Kilomet" };
 	protected int _currentQuestion = 1;
 	protected int _maxCurentQuestion = 20;
 	protected Question[] _questionDatas;
 	protected float _result = 0;
 	protected float _unitValue = 0.25f;
 	protected float _unitCircleValue = 0.01f;
+
+	protected int _type;
 	private void Start()
 	{
 
@@ -58,15 +63,105 @@ public class LearningClassThree : LearningManager
 		popupQuitGame.Click -= DesTroyOb;
 		popupEndGame.Click -= DesTroyOb;
 	}
+
+	public void OnShowType(int type)
+	{
+		_type = type;
+	}
 	public void LoadQuestion()
 	{
+		switch (_type)
+		{
+			case 0:
+				LoadQuestionShape();
+				break;
+			case 1:
+				LoadQuestionUnit();
+				break;
+		}
+		//DrawTriangle(ref numb1, ref numb2, ref numb3);
+
+	}
+
+	private void LoadQuestionUnit()
+	{
+		_contentTxt.gameObject.SetActive(false);
+		int typeUnit = Random.Range(0, 2);
+		int randomValue = Random.Range(0, 10);
+
+
+		int randomIndex = 0;
+		int randomIndex2 = 0;
+		int numb1 = 0;
+		int numb2 = 0;
+		switch (typeUnit)
+		{
+			case 0:
+				randomIndex = Random.Range(0, _unitHeight.Length);
+				randomIndex2 = Random.Range(0, _unitHeight.Length);
+				while (randomIndex2 == randomIndex)
+				{
+					randomIndex2 = Random.Range(0, _unitHeight.Length);
+				}
+				if (randomIndex > randomIndex2)
+				{
+					numb1 = Mathf.FloorToInt(randomValue * Mathf.Pow(10, randomIndex - randomIndex2));
+					numb2 = randomValue;
+
+				}
+				else
+				{
+					numb2 = Mathf.FloorToInt(randomValue * Mathf.Pow(10, randomIndex2 - randomIndex));
+					numb1 = randomValue;
+				}
+				_result = Random.Range(0, 100) >= 50 ? numb1 : numb2;
+				_formular.SpawnFormular(string.Format("{0} {1} = {2} {3}", numb2 == _result ? "?" : numb2, _unitHeight[randomIndex], numb1 == _result ? "?" : numb1, _unitHeight[randomIndex2]));
+				rd.InitResult((int)_result, _result);
+				break;
+			case 1:
+				randomIndex = Random.Range(0, _unitWeight.Length);
+				randomIndex2 = Random.Range(0, _unitWeight.Length);
+				while (randomIndex2 == randomIndex)
+				{
+					randomIndex2 = Random.Range(0, _unitHeight.Length);
+				}
+				if (randomIndex > randomIndex2)
+				{
+					numb1 = Mathf.FloorToInt(randomValue * Mathf.Pow(10, randomIndex - randomIndex2));
+					numb2 = randomValue;
+
+				}
+				else
+				{
+					numb2 = Mathf.FloorToInt(randomValue * Mathf.Pow(10, randomIndex2 - randomIndex));
+					numb1 = randomValue;
+				}
+				_result = Random.Range(0, 100) >= 50 ? numb1 : numb2;
+				_formular.SpawnFormular(string.Format("{0} {1} = {2} {3}", numb2 == _result ? "?" : numb2, _unitWeight[randomIndex], numb1 == _result ? "?" : numb1, _unitWeight[randomIndex2]));
+				rd.InitResult((int)_result, _result);
+				break;
+		}
+
+	}
+
+	private void LoadQuestionShape()
+	{
+		_contentTxt.gameObject.SetActive(true);
 		_customText1.gameObject.SetActive(false);
 		_customText2.gameObject.SetActive(false);
 		float numb1 = 0;
 		float numb2 = 0;
 		float numb3 = 0;
-		//DrawTriangle(ref numb1, ref numb2, ref numb3);
-		DrawCircle(ref numb1, ref numb2);
+		int shape = Random.Range(0, 3);
+		switch (shape)
+		{
+			case 0:
+				DrawTriangle(ref numb1, ref numb2, ref numb3);
+				break;
+			case 1:
+				DrawCircle(ref numb1, ref numb2);
+				break;
+		}
 	}
 
 

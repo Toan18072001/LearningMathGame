@@ -2004,7 +2004,7 @@ MonoBehaviour:
   _line2: {fileID: 159367502980133243}
   _line3: {fileID: 5660369701107717101}
   _line4: {fileID: 7908197940550257323}
-  countQuestionUI: {fileID: 0}
+  countQuestionUI: {fileID: 7441605901312536801}
   _contentTxt: {fileID: 2577408752327576825}
   _uICaculation: {fileID: 0}
   _formular: {fileID: 6377256333873970550}
@@ -4707,7 +4707,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6377256333938304010}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 

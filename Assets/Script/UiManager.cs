@@ -96,19 +96,27 @@ public class UiManager : MonoBehaviour
 	{
 		var ob = Instantiate(classTwo, parent.transform.position, Quaternion.identity, parent.transform);
 		ob.gameObject.SetActive(true);
-		classTwo.OnShowType(0);
+		ob.OnShowType(0);
 	}
 
 	public void GameWithQuestionFindNumber()
 	{
 		var ob = Instantiate(classTwo, parent.transform.position, Quaternion.identity, parent.transform);
 		ob.gameObject.SetActive(true);
-		classTwo.OnShowType(1);
+		ob.OnShowType(1);
 	}
 
 	public void GameWithShape()
 	{
 		var ob = Instantiate(classThree, parent.transform.position, Quaternion.identity, parent.transform);
+		ob.OnShowType(0);
+		ob.gameObject.SetActive(true);
+	}
+
+	public void GameWithUnit()
+	{
+		var ob = Instantiate(classThree, parent.transform.position, Quaternion.identity, parent.transform);
+		ob.OnShowType(1);
 		ob.gameObject.SetActive(true);
 	}
 	#endregion
