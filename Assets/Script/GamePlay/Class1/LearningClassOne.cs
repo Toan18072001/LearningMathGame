@@ -154,6 +154,8 @@ public class LearningClassOne : LearningManager
             }
         }
     }
+
+   
     public void ResultSucces()
     {
         if (isSummaryCaculation && currentQuestion >20)

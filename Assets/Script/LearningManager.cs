@@ -96,4 +96,6 @@ public class LearningManager : MonoBehaviour
         }
         return cTypeCatution;
     }
+
+   
 }

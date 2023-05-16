@@ -1,0 +1,28 @@
+[
+{
+	"content":"Trong một nông trại A có {0} cái chuồng, mỗi cái chuồng có {1} con {3}. Biết tổng số lượng là {2}.",
+	"question":["Số chuồng cần tìm là?","Số con vật ở mỗi chuồng là?","Tổng số lượng con vật là?"],
+	"formular": 0,
+	"objectRandom":[["Chó","Bò","Gà","Heo"]]
+},
+{
+	"content":"Ở một quán cơm B buổi sáng bán được {0} suất cơm. buổi chiều bán được {1} suất cơm. tổng cộng",
+	"question":["buổi sáng bán được bao nhiêu suất?","buổi chiều bán được bao nhiêu suất?", "tổng cộng bán được bao nhiêu suất cơm trong ngày?"],
+	"formular": 1,
+	"objectRandom":[]
+},
+{
+	"content":"Trên 1 cành cây nọ có {0} con chim, 5 phút sau {1} con chim bay mất, trên cây còn lại {2} con chim",
+	"question":["Tổng cộng có bao nhiêu con chim?","Bao nhiêu con chim bay mất?", "bao nhiêu con chim còn lại trên cây?"],
+	"formular": 2,
+	"objectRandom":[]
+}
+,
+{
+	"content":"{3} có {0} {4} , {3} chia đều {1} {4} cho vào {2} cái giỏ. ",
+	"question":["{3} có bao nhiêu {4}?","số lượng {4} trong từng cái giỏ", "Có bao nhiêu cái giỏ?"],
+	"formular": 3,
+	"objectRandom":[["Nam","Minh","Tuấn"],["cái bánh","cái kẹo","trái cam"]]
+}
+
+]
