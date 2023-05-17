@@ -10,6 +10,7 @@ public class UiManager : MonoBehaviour
 	[SerializeField] LearningClassOne classOne;
 	[SerializeField] LearningClassTwo classTwo;
 	[SerializeField] LearningClassThree classThree;
+	[SerializeField] LearningClassFour classFour;
 
 	[SerializeField] GameObject parent;
 	[SerializeField] private GameObject currentUI;
@@ -116,6 +117,13 @@ public class UiManager : MonoBehaviour
 	public void GameWithUnit()
 	{
 		var ob = Instantiate(classThree, parent.transform.position, Quaternion.identity, parent.transform);
+		ob.OnShowType(1);
+		ob.gameObject.SetActive(true);
+	}
+
+	public void GameDevide()
+	{
+		var ob = Instantiate(classFour, parent.transform.position, Quaternion.identity, parent.transform);
 		ob.OnShowType(1);
 		ob.gameObject.SetActive(true);
 	}

@@ -152,7 +152,8 @@ public class LearningClassThree : LearningManager
 		float numb1 = 0;
 		float numb2 = 0;
 		float numb3 = 0;
-		int shape = Random.Range(0, 3);
+		int shape = Random.Range(0, 4);
+		//shape = 3;
 		switch (shape)
 		{
 			case 0:
@@ -160,6 +161,12 @@ public class LearningClassThree : LearningManager
 				break;
 			case 1:
 				DrawCircle(ref numb1, ref numb2);
+				break;
+			case 2:
+				DrawSquare(ref numb1, ref numb2);
+				break;
+			case 3:
+				DrawRectancle(ref numb1, ref numb2, ref numb3);
 				break;
 		}
 	}
@@ -181,6 +188,8 @@ public class LearningClassThree : LearningManager
 		}
 		return TypeCalculation.Sum;
 	}
+	#region Shape Math
+
 	private void DrawCircle(ref float numb1, ref float numb2)
 	{
 		int point = 71;
@@ -210,11 +219,21 @@ public class LearningClassThree : LearningManager
 				rd.InitResult(100, numb2);
 				break;
 			case 1:
+
 				_contentTxt.text = string.Format("Cho hình tròn có diện tích là {0} . Tìm bán kính hình tròn?", numb2);
 				_formular.SpawnFormular(string.Format("S = {0} , R = ?", numb2));
 				_result = numb1;
 				rd.InitResult(100, numb1);
 				break;
+
+			case 2:
+				numb2 = 2 * Mathf.PI * numb1;
+				_contentTxt.text = string.Format("Cho hình tròn có bán kính là {0} . Tìm  chu vi tròn?", numb1);
+				_formular.SpawnFormular(string.Format("R = {0} , P = ?", numb1));
+				_result = numb1;
+				rd.InitResult(100, numb1);
+				break;
+
 				//case 2:
 				//	_contentTxt.text = string.Format("Cho hình tam giác diện tích là {0} và độ dài cạnh đáy là {1}. Tìm chiều cao từ cạnh đáy?", numb1, numb2);
 				//	_questionTxt.text = string.Format("S = {0} , a= {1}\n h=?", numb3, numb1);
@@ -222,6 +241,97 @@ public class LearningClassThree : LearningManager
 				//	break;
 		}
 	}
+
+	private void DrawSquare(ref float numb1, ref float numb2)
+	{
+
+		numb1 = Random.Range(5, 30);
+		numb2 = numb1 / 2;
+		_line.positionCount = 5;
+		_line.SetPosition(0, _line2.transform.position + (Vector3.left * _unitValue * numb2) + (Vector3.up * _unitValue * numb2));
+		_line.SetPosition(1, _line2.transform.position + (Vector3.right * _unitValue * numb2) + (Vector3.up * _unitValue * numb2));
+		_line.SetPosition(2, _line2.transform.position + (Vector3.right * _unitValue * numb2) + (Vector3.down * _unitValue * numb2));
+		_line.SetPosition(3, _line2.transform.position + (Vector3.left * _unitValue * numb2) + (Vector3.down * _unitValue * numb2));
+		_line.SetPosition(4, _line.GetPosition(0));
+		int type = Random.Range(0, 3);
+		switch (type)
+		{
+			case 0:
+				numb2 = numb1 * numb1;
+				_contentTxt.text = string.Format("cho hình vuông có chiều dài cạnh là {0}. Tìm diện tich?", numb1);
+				_formular.SpawnFormular(string.Format("a = {0} , S = ?", numb1));
+				_result = numb2;
+				rd.InitResult(100, numb2);
+				break;
+			case 1:
+				numb2 = numb1 * numb1;
+				_contentTxt.text = string.Format("cho hình vuông có diện tích là {0}. Tìm độ dài cạnh?", numb2);
+				_formular.SpawnFormular(string.Format("S = {0} , a = ?", numb2));
+				_result = numb1;
+				rd.InitResult(100, numb1);
+				break;
+
+			case 2:
+				numb2 = 2 * Mathf.PI * numb1;
+				_contentTxt.text = string.Format("cho hình vuông có chiều dài cạnh là {0}. Tìm chu vi?", numb1);
+				_formular.SpawnFormular(string.Format("a = {0} , P = ?", numb1));
+				_result = numb2;
+				rd.InitResult(100, numb1);
+				break;
+
+				//case 2:
+				//	_contentTxt.text = string.Format("Cho hình tam giác diện tích là {0} và độ dài cạnh đáy là {1}. Tìm chiều cao từ cạnh đáy?", numb1, numb2);
+				//	_questionTxt.text = string.Format("S = {0} , a= {1}\n h=?", numb3, numb1);
+				//	rd.InitResult(100, numb2);
+				//	break;
+		}
+	}
+
+	private void DrawRectancle(ref float numb1, ref float numb2, ref float numb3)
+	{
+
+		numb1 = Random.Range(5, 30);
+		numb2 = Random.Range(5, 30);
+		_line.positionCount = 5;
+		_line.SetPosition(0, _line2.transform.position + (Vector3.left * _unitValue * numb1 / 2) + (Vector3.up * _unitValue * numb2 / 2));
+		_line.SetPosition(1, _line2.transform.position + (Vector3.right * _unitValue * numb1 / 2) + (Vector3.up * _unitValue * numb2 / 2));
+		_line.SetPosition(2, _line2.transform.position + (Vector3.right * _unitValue * numb1 / 2) + (Vector3.down * _unitValue * numb2 / 2));
+		_line.SetPosition(3, _line2.transform.position + (Vector3.left * _unitValue * numb1 / 2) + (Vector3.down * _unitValue * numb2 / 2));
+		_line.SetPosition(4, _line.GetPosition(0));
+		int type = Random.Range(0, 4);
+		switch (type)
+		{
+			case 0:
+				numb3 = numb1 * numb2;
+				_contentTxt.text = string.Format("cho hình chữ nhật có chiều dài cạnh lần lượt là a = {0} b = {1}. Tìm diện tich?", numb1, numb2);
+				_formular.SpawnFormular(string.Format("a = {0} b = {1} S = ?", numb1, numb2));
+				_result = numb3;
+				rd.InitResult(100, numb2);
+				break;
+			case 1:
+				numb3 = numb1 * numb2;
+				_contentTxt.text = string.Format("cho hình chữ nhật có chiều dài cạnh là a = {0} và diện tích là {1} .Tìm độ dài cạnh còn lại b = ?", numb1, numb3);
+				_formular.SpawnFormular(string.Format("a = {0}  S = {1} b = ?", numb1, numb3));
+				_result = numb2;
+				rd.InitResult(100, numb1);
+				break;
+
+			case 2:
+				numb3 = (numb1 + numb2) * 2;
+				_contentTxt.text = string.Format("cho hình chữ nhật có chiều dài cạnh lần lượt là a = {0} b = {1}. Tìm Chu vi?", numb1, numb2);
+				_formular.SpawnFormular(string.Format("a = {0} b = {1} P = ?", numb1, numb2));
+				_result = numb2;
+				rd.InitResult(100, numb3);
+				break;
+
+				//case 2:
+				//	_contentTxt.text = string.Format("Cho hình tam giác diện tích là {0} và độ dài cạnh đáy là {1}. Tìm chiều cao từ cạnh đáy?", numb1, numb2);
+				//	_questionTxt.text = string.Format("S = {0} , a= {1}\n h=?", numb3, numb1);
+				//	rd.InitResult(100, numb2);
+				//	break;
+		}
+	}
+
 	private void DrawTriangle(ref float numb1, ref float numb2, ref float numb3)
 	{
 		_customText1.gameObject.SetActive(true);
@@ -254,30 +364,44 @@ public class LearningClassThree : LearningManager
 		_line2.SetPosition(0, point3);
 		_line2.SetPosition(1, point4);
 
-		numb3 = 0.5f * numb1 * numb2;
 
 
-		int type = Random.Range(0, 3);
+		float numb4 = 0;
+		int type = Random.Range(0, 4);
 		switch (type)
 		{
 			case 0:
+				numb3 = 0.5f * numb1 * numb2;
 				_contentTxt.text = string.Format("Cho hình tam giác có độ dài cạnh đáy là {0} và chiều cao từ cạnh đáy là {1}. Tìm diện tích hình tam giác?", numb1, numb2);
 				_formular.SpawnFormular(string.Format("a = {0} , h = {1} S = ?", numb1, numb2));
 				rd.InitResult(100, numb3);
 				break;
 			case 1:
+				numb3 = 0.5f * numb1 * numb2;
 				_contentTxt.text = string.Format("Cho hình tam giác có diện tích là {0} và chiều cao từ cạnh đáy là {1}. Tìm độ dài cạnh đáy hình tam giác?", numb1, numb2);
 				_formular.SpawnFormular(string.Format("S = {0} , h = {1}  a = ?", numb3, numb2));
 				rd.InitResult(100, numb1);
 				break;
 			case 2:
+				numb3 = 0.5f * numb1 * numb2;
 				_contentTxt.text = string.Format("Cho hình tam giác diện tích là {0} và độ dài cạnh đáy là {1}. Tìm chiều cao từ cạnh đáy?", numb1, numb2);
 				_formular.SpawnFormular(string.Format("S = {0} , a= {1}  h = ?", numb3, numb1));
 				rd.InitResult(100, numb2);
 				break;
+
+			case 3:
+				numb1 = Mathf.Floor(Vector3.Distance(point1, point2));
+				numb2 = Mathf.Floor(Vector3.Distance(point2, point3));
+				numb3 = Mathf.Floor(Vector3.Distance(point3, point1));
+				numb4 = numb1 + numb2 + numb3;
+				_contentTxt.text = string.Format("Cho hình tam giác có độ dài cạnh đáy lần lượt là a = {0} b= {1} c = {2}. tính chu vi P=?", numb1, numb2, numb3);
+				_formular.SpawnFormular(string.Format("a = {0}  b= {1}  c = {2} P = ?", numb1, numb2, numb3));
+				rd.InitResult(100, numb4);
+				break;
 		}
 
 	}
+	#endregion
 	public void OnResultChanged(string result)
 	{
 
